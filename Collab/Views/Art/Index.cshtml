@@ -1,0 +1,31 @@
+﻿@using Collab.Models
+@model IndexModel
+
+@{
+    ViewBag.Title = "";
+}
+
+<div id="artContainer">
+  @for(int Y = 0; Y < Model.Width; Y++)
+  {
+    for (int X = 0; X < Model.Height; X++)
+    {
+      Tile tile = Model.ImageList[X, Y];
+      
+      <div class="tile" data-x="@X" data-y="@Y">
+        @if (tile != null)
+        {
+          <img src="@Url.Content("~/Content/Images/Current/" + tile.ImagePath)" />
+        }
+        else
+        {
+          <img src="@Url.Content("~/Content/Images/unassigned.png")" class="unassigned" />
+        }
+      </div>
+    }
+  }
+</div>
+
+<div id="artUpload">
+  
+</div>

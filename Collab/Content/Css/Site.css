@@ -1,0 +1,26 @@
+#artContainer {
+  width: 640px;
+  height: 640px;
+}
+
+.tile {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  width: 64px;
+  height: 64px;
+  float: left;
+}
+
+.tile img {
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+.unassigned {
+  
+}
+
+.hidden {
+  display: none;
+}

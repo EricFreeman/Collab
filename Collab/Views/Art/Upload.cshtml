@@ -1,0 +1,24 @@
+﻿@model Collab.Models.UploadModel
+
+<div id="uploader">
+  @if (Model.IsSuccessful == null)
+  {
+    <form enctype = "multipart/form-data" action ="Art/Upload" method ="post">
+      @Html.HiddenFor(x => x.X)
+      @Html.HiddenFor(x => x.Y)
+      
+      <input type="file" name="File" id="File" />
+      
+      <input type="submit" id="submit" />
+    </form>
+  }
+  else if (Model.IsSuccessful.Value)
+  {
+    <h2 data-imageUrl="@Model.ImageUrl" id="successMessage">Success!</h2>
+  }
+  else
+  {
+    <h2>Failed!</h2>
+    <h3>@Model.ErrorMessage</h3>
+  }
+</div>
