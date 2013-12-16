@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Drawing;
@@ -7,6 +8,8 @@ namespace Extensions
 {
     public static class ImageExtensions
     {
+        private static readonly string[] Formats = { ".jpg", ".png", ".gif", ".jpeg" };
+        
         public static Image ResizeImage(this Image image, int newSize)
         {
             return new Bitmap(image, new Size(newSize, newSize));
@@ -22,9 +25,12 @@ namespace Extensions
             if (file == null) return false;
             if (file.ContentType.Contains("image")) return true;
 
-            string[] formats = { ".jpg", ".png", ".gif", ".jpeg" };
+            return Formats.Any(item => file.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
+        }
 
-            return formats.Any(item => file.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
+        public static FileInfo[] OnlyImages(this FileInfo[] files)
+        {
+            return files.Where(x => Formats.Contains(x.Extension)).ToArray();
         }
     }
 }

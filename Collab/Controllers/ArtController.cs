@@ -18,7 +18,7 @@ namespace Collab.Controllers
         {
             var model = new IndexModel { ImageList = new Tile[10, 10], Width = 10, Height = 10 };
 
-            var images = new DirectoryInfo(Server.MapPath("~/UploadedImages/Current/")).GetFiles();
+            var images = new DirectoryInfo(Server.MapPath("~/UploadedImages/Current/")).GetFiles().OnlyImages();
 
             foreach (var image in images)
             {
