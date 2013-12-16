@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Collab.Models;
+using Extensions;
 
 namespace Collab.Controllers
 {
@@ -55,31 +57,38 @@ namespace Collab.Controllers
         [HttpPost]
         public ActionResult Upload(UploadModel model)
         {
-            if (!IsImage(model.File))
+            if (!model.File.IsImage())
             {
                 model.IsSuccessful = false;
                 model.ErrorMessage = "Image type not recognized!";
             }
             else
             {
-                using (System.Drawing.Image image = System.Drawing.Image.FromStream(model.File.InputStream, true, true))
+                var image = Image.FromStream(model.File.InputStream, true, true);
+
+                if (GetImage(model.X, model.Y) != null)
                 {
-                    if (GetImage(model.X, model.Y) != null)
+                    model.IsSuccessful = false;
+                    model.ErrorMessage = "Tile already taken!";
+                }
+                else if (image.Width != 64 || image.Height != 64)
+                {
+                    if (!model.Resize)
                     {
                         model.IsSuccessful = false;
-                        model.ErrorMessage = "Tile already taken!";
-                    }
-                    else if (image.Width != 64 || image.Height != 64)
-                    {
-                        model.IsSuccessful = false;
-                        model.ErrorMessage = "Image dimensions not supported (64 x 64 required)";
+                        model.ErrorMessage = "Image dimensions not supported (64 x 64 required).  Would you like to resize?";
                     }
                     else
                     {
-                        model.File.SaveAs(Server.MapPath("~/Content/Images/Current/") + model.X + "-" + model.Y + ".png");
-                        model.IsSuccessful = true;
-                        model.ImageUrl = GetImage(model.X, model.Y).Name;
+                        image = image.ResizeImage(64);
                     }
+                }
+
+                if (model.IsSuccessful.IsNotFalse())
+                {
+                    model.IsSuccessful = true;
+                    image.Save(Server.MapPath("~/Content/Images/Current/") + model.X + "-" + model.Y + ".png");
+                    model.ImageUrl = GetImage(model.X, model.Y).Name;
                 }
             }
 
@@ -96,17 +105,6 @@ namespace Collab.Controllers
                 var tokens = fileName.Split('-');
                 return tokens[0] == x.ToString() && tokens[1] == y.ToString();
             });
-        }
-
-        private bool IsImage(HttpPostedFileBase file)
-        {
-            if (file == null) return false;
-            if (file.ContentType.Contains("image")) return true;
-
-            string[] formats = new string[] { ".jpg", ".png", ".gif", ".jpeg" }; // add more if u like...
-
-            // linq from Henrik Stenbæk
-            return formats.Any(item => file.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

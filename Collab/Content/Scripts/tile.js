@@ -6,21 +6,31 @@
   function init() {
 
     $(function () {
+      var initializeUploader = function(response, options) {
+        $('#artUpload').html(response);
+        $('form').ajaxForm(options);
+      };
+
       $('.tile').on('click', function() {
         var tile = $(this);
         $.get('Art/Upload', { x: tile.data('x'), y: tile.data('y') }, function (response) {
-          $('#artUpload').html(response);
 
-          var options = {  
+          var options = {
             success: function(result) {
-              var imgUrl;
-              $('#artUpload').html(result);
-              imgUrl = $('#successMessage').data('imageurl');
-              if(imgUrl != undefined)
+              var imgUrl, successMessage;
+              initializeUploader(result, options);
+
+              successMessage = $('#successMessage');
+              imgUrl = successMessage.data('imageurl');
+
+              if (!!imgUrl) {
                 tile.find('img').attr('src', '/Content/Images/Current/' + imgUrl);
+                successMessage.fadeOut(4000);
+              }
             }
           };
-          $('form').ajaxForm(options);
+
+          initializeUploader(response, options);
         });
       });
       

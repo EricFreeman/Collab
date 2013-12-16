@@ -1,22 +1,27 @@
-﻿@model Collab.Models.UploadModel
+﻿@using Extensions
+@model Collab.Models.UploadModel
 
 <div id="uploader">
-  @if (Model.IsSuccessful == null)
+  @if (Model.IsSuccessful.IsNotTrue())
   {
     <form enctype = "multipart/form-data" action ="Art/Upload" method ="post">
       @Html.HiddenFor(x => x.X)
       @Html.HiddenFor(x => x.Y)
+      
+      @Html.LabelFor(x=>x.Resize, "Resize image to 64 x 64?")
+      @Html.CheckBoxFor(x=>x.Resize)
       
       <input type="file" name="File" id="File" />
       
       <input type="submit" id="submit" />
     </form>
   }
-  else if (Model.IsSuccessful.Value)
+  
+  @if (Model.IsSuccessful.IsTrue())
   {
     <h2 data-imageUrl="@Model.ImageUrl" id="successMessage">Success!</h2>
   }
-  else
+  else if(Model.IsSuccessful.IsFalse())
   {
     <h2>Failed!</h2>
     <h3>@Model.ErrorMessage</h3>

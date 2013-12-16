@@ -9,6 +9,7 @@ namespace Collab.Models
         public int Y { get; set; }
 
         public bool? IsSuccessful { get; set; }
+        public bool Resize { get; set; }
         public string ErrorMessage { get; set; }
         public string ImageUrl { get; set; }
     }
