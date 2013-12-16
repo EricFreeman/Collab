@@ -18,7 +18,7 @@ namespace Collab.Controllers
         {
             var model = new IndexModel { ImageList = new Tile[10, 10], Width = 10, Height = 10 };
 
-            var images = new DirectoryInfo(Server.MapPath("~/Content/Images/Current/")).GetFiles();
+            var images = new DirectoryInfo(Server.MapPath("~/UploadedImages/Current/")).GetFiles();
 
             foreach (var image in images)
             {
@@ -87,7 +87,7 @@ namespace Collab.Controllers
                 if (model.IsSuccessful.IsNotFalse())
                 {
                     model.IsSuccessful = true;
-                    image.Save(Server.MapPath("~/Content/Images/Current/") + model.X + "-" + model.Y + ".png");
+                    image.Save(Server.MapPath("~/UploadedImages/Current/") + model.X + "-" + model.Y + ".png");
                     model.ImageUrl = GetImage(model.X, model.Y).Name;
                 }
             }
@@ -97,7 +97,7 @@ namespace Collab.Controllers
 
         private FileInfo GetImage(int x, int y)
         {
-            var images = new DirectoryInfo(Server.MapPath("~/Content/Images/Current/")).GetFiles();
+            var images = new DirectoryInfo(Server.MapPath("~/UploadedImages/Current/")).GetFiles();
 
             return images.FirstOrDefault(file =>
             {

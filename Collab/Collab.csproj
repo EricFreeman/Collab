@@ -136,6 +136,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadedImages\Current\" />
+    <Folder Include="UploadedImages\Previous\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
