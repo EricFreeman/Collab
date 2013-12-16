@@ -1,16 +1,17 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Collab.Models;
+using Collab.Services;
 using Extensions;
 
 namespace Collab.Controllers
 {
     public class ArtController : Controller
     {
+        #region Index
+
         /// <summary>
         /// Default page showing the current piece being worked on
         /// </summary>
@@ -20,7 +21,7 @@ namespace Collab.Controllers
 
             var images = new DirectoryInfo(Server.MapPath("~/UploadedImages/Current/")).GetFiles().OnlyImages();
 
-            foreach (var image in images)
+            images.Each(image =>
             {
                 var loc = image.Name.Remove(image.Name.IndexOf('.')).Split('-');
 
@@ -28,10 +29,14 @@ namespace Collab.Controllers
                 var y = int.Parse(loc[1]);
 
                 model.ImageList[x, y] = new Tile() {X = x, Y = y, ImagePath = image.Name};
-            }
+            });
 
             return View(model);
         }
+
+        #endregion
+
+        #region Upload
 
         /// <summary>
         /// Upload tile screen
@@ -88,23 +93,40 @@ namespace Collab.Controllers
                 {
                     model.IsSuccessful = true;
                     image.Save(Server.MapPath("~/UploadedImages/Current/") + model.X + "-" + model.Y + ".png");
-                    model.ImageUrl = GetImage(model.X, model.Y).Name;
+                    CompletionService.Run();
+ 
+                    model.ImageUrl = GetImage(model.X, model.Y, true).FullName.RemoveBefore("\\UploadedImages\\");
                 }
             }
 
             return PartialView(model);
         }
 
-        private FileInfo GetImage(int x, int y)
+        //TODO: This is really ugly, please rewrite
+        private FileInfo GetImage(int x, int y, bool checkPrevious = false)
         {
             var images = new DirectoryInfo(Server.MapPath("~/UploadedImages/Current/")).GetFiles();
+            var previousDirect =
+                new DirectoryInfo(Server.MapPath("~/UploadedImages/Previous")).GetDirectories()
+                    .OrderByDescending(folder => folder.LastWriteTime).FirstOrDefault();
+            var previous = previousDirect != null ? previousDirect.GetFiles() : null;
 
-            return images.FirstOrDefault(file =>
+            var image = FindFile(images, x, y) ?? 
+                (checkPrevious ? FindFile(previous, x, y) : null);
+
+            return image;
+        }
+
+        private FileInfo FindFile(FileInfo[] files, int x, int y)
+        {
+            return files.FirstOrDefault(file =>
             {
                 var fileName = Path.GetFileNameWithoutExtension(file.FullName);
                 var tokens = fileName.Split('-');
                 return tokens[0] == x.ToString() && tokens[1] == y.ToString();
             });
         }
+
+        #endregion
     }
 }

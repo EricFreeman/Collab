@@ -24,7 +24,7 @@
               imgUrl = successMessage.data('imageurl');
 
               if (!!imgUrl) {
-                tile.find('img').attr('src', '/UploadedImages/Current/' + imgUrl);
+                tile.find('img').attr('src', imgUrl);
                 successMessage.fadeOut(4000);
               }
             }
