@@ -1,6 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using Collab.Models;
 using Collab.Services;
@@ -17,19 +20,11 @@ namespace Collab.Controllers
         /// </summary>
         public ActionResult Index()
         {
-            var model = new IndexModel { ImageList = new Tile[10, 10], Width = 10, Height = 10 };
+            int width = 10 ,height = 10; //TODO: Hardcoded widths and heights are terrible please setup with config or something and make it so different art pieces can be different sizes
 
-            var images = new DirectoryInfo(Server.MapPath("~/UploadedImages/Current/")).GetFiles().OnlyImages();
+            var model = new IndexModel { ImageList = new Tile[width, height], Width = width, Height = height };
 
-            images.Each(image =>
-            {
-                var loc = image.Name.Remove(image.Name.IndexOf('.')).Split('-');
-
-                var x = int.Parse(loc[0]);
-                var y = int.Parse(loc[1]);
-
-                model.ImageList[x, y] = new Tile() {X = x, Y = y, ImagePath = image.Name};
-            });
+            model.ImageList = ArtBuilder(Server.MapPath("~/UploadedImages/Current/"), width, height);
 
             return View(model);
         }
@@ -102,29 +97,102 @@ namespace Collab.Controllers
             return PartialView(model);
         }
 
-        //TODO: This is really ugly, please rewrite
-        private FileInfo GetImage(int x, int y, bool checkPrevious = false)
+        #endregion
+
+        #region Previous
+
+        public ActionResult Previous()
         {
-            var images = new DirectoryInfo(Server.MapPath("~/UploadedImages/Current/")).GetFiles();
-            var previousDirect =
-                new DirectoryInfo(Server.MapPath("~/UploadedImages/Previous")).GetDirectories()
-                    .OrderByDescending(folder => folder.LastWriteTime).FirstOrDefault();
-            var previous = previousDirect != null ? previousDirect.GetFiles() : null;
+            var model = new PreviousModel();
+            model.Collabs = new List<PreviousCollab>();
 
-            var image = FindFile(images, x, y) ?? 
-                (checkPrevious ? FindFile(previous, x, y) : null);
+            var directories = new DirectoryInfo(Server.MapPath("~/UploadedImages/Previous")).GetDirectories();
 
-            return image;
+            directories.Each(d =>
+            {
+                var pc = new PreviousCollab {Id = d.Name, HasThumbnail = d.GetFiles("thumbnail.png").Any()};
+
+                model.Collabs.Add(pc);
+
+            });
+
+            return View(model);
         }
 
-        private FileInfo FindFile(FileInfo[] files, int x, int y)
+        [HttpGet]
+        public ActionResult PreviousImage(string id = "")
         {
-            return files.FirstOrDefault(file =>
-            {
-                var fileName = Path.GetFileNameWithoutExtension(file.FullName);
-                var tokens = fileName.Split('-');
-                return tokens[0] == x.ToString() && tokens[1] == y.ToString();
-            });
+            int width = 10, height = 10; //TODO: read these in from config once that's set up
+
+            var model = new PreviousImageModel();
+            model.Id = id;
+            model.Width = width;
+            model.Height = height;
+
+            if (id.IsNotNullOrEmpty())
+                model.ImageList = ArtBuilder(
+                    Server.MapPath("~/UploadedImages/Previous/{0}".ToFormat(id)), width, height);
+
+            return View(model);
+        }
+
+        #endregion
+
+        #region Helpers
+
+        public DirectoryInfo GetDirectory(string folder)
+        {
+            return new DirectoryInfo(Server.MapPath("~/UploadedImages/{0}/".ToFormat(folder)));
+        }
+
+        private FileInfo GetImage(int x, int y)
+        {
+            var current = GetDirectory("Current");
+            var images = current.GetFiles();
+            return FindFile(images, x, y);
+        }
+
+        private FileInfo GetImage(int x, int y, bool checkPrevious)
+        {
+            var previousDirect = GetDirectory("Previous")
+                .GetDirectories()
+                .OrderByDescending(folder => folder.LastWriteTime)
+                .FirstOrDefault();
+
+            var previous = previousDirect != null
+                ? previousDirect.GetFiles()
+                : Enumerable.Empty<FileInfo>();
+
+            return GetImage(x, y) ??
+                   (checkPrevious ? FindFile(previous, x, y) : null);
+        }
+
+        private FileInfo FindFile(IEnumerable<FileInfo> files, int x, int y)
+        {
+            return files
+                   .Where(FilterImages)
+                   .FirstOrDefault(file => new Tile(file).Matches(x, y));
+        }
+
+        public Tile[,] ArtBuilder(string folderPath, int width, int height)
+        {
+            var images = new DirectoryInfo(folderPath).GetFiles().OnlyImages();
+
+            return images
+                .Where(FilterImages)
+                .Select(x => new Tile(x))
+                .Aggregate(new Tile[width, height], (acc, tile) =>
+                {
+                    acc[tile.Position.X, tile.Position.Y] = tile;
+
+                    return acc;
+                });
+        }
+
+        public bool FilterImages(FileInfo image)
+        {
+            return Regex.Match(Path.GetFileNameWithoutExtension(image.Name),
+                @"^(\d+)-(\d+)", RegexOptions.None).Success;
         }
 
         #endregion

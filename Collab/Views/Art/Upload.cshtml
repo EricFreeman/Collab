@@ -4,7 +4,7 @@
 <div id="uploader">
   @if (Model.IsSuccessful.IsNotTrue())
   {
-    <form enctype = "multipart/form-data" action ="Art/Upload" method ="post">
+    <form enctype = "multipart/form-data" action ="Upload" method ="post">
       @Html.HiddenFor(x => x.X)
       @Html.HiddenFor(x => x.Y)
       

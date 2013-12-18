@@ -11,10 +11,14 @@
         $('form').ajaxForm(options);
       };
 
-      $('.tile').on('click', function() {
+      $('.tile').on('click', function () {
         var tile = $(this);
-        $.get('Art/Upload', { x: tile.data('x'), y: tile.data('y') }, function (response) {
+        if (!$(tile).find('img').hasClass('unassigned')) {
+          $('#artUpload').html('');
+          return;
+        }
 
+        $.get('/Art/Upload', { x: tile.data('x'), y: tile.data('y') }, function (response) {
           var options = {
             success: function(result) {
               var imgUrl, successMessage;
@@ -24,7 +28,7 @@
               imgUrl = successMessage.data('imageurl');
 
               if (!!imgUrl) {
-                tile.find('img').attr('src', imgUrl);
+                tile.find('img').attr('src', imgUrl).removeClass('unassigned');
                 successMessage.fadeOut(4000);
               }
             }

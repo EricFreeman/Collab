@@ -16,9 +16,10 @@
       var require = {
         paths: {
           "jquery" : "jquery-2.0.3.min"
-        }
+        },
+        urlArgs : "v=" + (new Date()).getTime()
       };
     </script>   
-    <script data-main="Content/Scripts/main" src="@Url.Content("~/Content/Scripts/require.js")" type="text/javascript"></script>
+    <script data-main="../Content/Scripts/main" src="@Url.Content("~/Content/Scripts/require.js")" type="text/javascript"></script>
   </body>
 </html>

@@ -1,5 +1,6 @@
-﻿define(["tile"], function(tiles) {
+﻿define(["tile", "previous"], function(tiles, previous) {
 
   tiles.init();
-  
+  previous.init();
+
 });

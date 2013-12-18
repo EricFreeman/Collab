@@ -1,0 +1,32 @@
+﻿@using Collab.Models
+@using Extensions
+@model PreviousImageModel
+
+<div id="selected">
+  @if (Model.Id.IsNotNullOrEmpty())
+  {
+
+    <div id="artContainer">
+      @for (int Y = 0; Y < Model.Width; Y++)
+      {
+        for (int X = 0; X < Model.Height; X++)
+        {
+          Tile tile = Model.ImageList[X, Y];
+
+        <div class="tile" data-x="@X" data-y="@Y">
+          @if (tile != null)
+          {
+            <img src="@Url.Content("~/UploadedImages/Previous/{0}/{1}".ToFormat(Model.Id, tile.ImagePath))" />
+            }
+          else
+          {
+            <img src="@Url.Content("~/Content/Images/unassigned.png")" />
+            }
+        </div>
+        }
+      }
+    </div>
+    <span>@Model.Id</span>
+}
+
+</div>

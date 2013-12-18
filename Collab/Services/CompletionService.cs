@@ -29,7 +29,7 @@ namespace Collab.Services
 
         private static void CompleteArt()
         {
-            var newDirectory = RootPath + "Previous\\{0}".ToFormat(DateTime.Now.ToString("HHmmssfffffff"));
+            var newDirectory = RootPath + "Previous\\{0}".ToFormat(DateTime.Now.ToString("yyyyMMddHHmmssfffffff"));
             Directory.CreateDirectory(newDirectory);
 
             var oldFiles = new DirectoryInfo(RootPath + "Current\\").GetFiles().OnlyImages();

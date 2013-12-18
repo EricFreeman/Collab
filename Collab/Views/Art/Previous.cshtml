@@ -1,0 +1,33 @@
+﻿@using Collab.Models
+@using Extensions
+@model Collab.Models.PreviousModel
+
+@{
+    ViewBag.Title = "Previous Collabs";
+}
+
+<!-- Currently looking at previous -->
+@Html.Action("PreviousImage", new { id = ""})
+
+<!-- Browse Previous -->
+<div id="previousCollabs">
+  @foreach (var collab in Model.Collabs)
+  {
+    <div class="previousCollabBrowse">
+      @if (collab.HasThumbnail)
+      {
+        <img class="thumbnail" src="@Url.Content("~/UploadedImages/Previous/{0}/thumbnail.png".ToFormat(collab.Id))" />
+      }
+      else
+      {
+        <img class="thumbnail" src="@Url.Content("~/Content/Images/no-thumbnail.png")" />
+      }
+      <br />
+      <span>@collab.Id</span>
+    </div>
+  }
+</div>
+
+<script>
+  
+</script>

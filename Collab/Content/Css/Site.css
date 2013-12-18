@@ -24,3 +24,15 @@
 .hidden {
   display: none;
 }
+
+#previousCollabs {
+  width: 640px;
+}
+
+.previousCollabBrowse {
+  float: left;
+}
+
+.selectedCollab {
+  color: Green;
+}

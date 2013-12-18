@@ -109,6 +109,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\IndexModel.cs" />
+    <Compile Include="Models\PreviousImageModel.cs" />
+    <Compile Include="Models\PreviousModel.cs" />
     <Compile Include="Models\UploadModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CompletionService.cs" />
@@ -118,7 +120,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\Css\Site.css" />
+    <Content Include="Content\Images\no-thumbnail.png" />
     <Content Include="Content\Images\unassigned.png" />
+    <Content Include="Content\Scripts\previous.js" />
     <Content Include="Content\Scripts\jquery-2.0.3.min.js" />
     <Content Include="Content\Scripts\jquery.form.js" />
     <Content Include="Content\Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -163,6 +167,12 @@
       <Project>{788bdb19-077f-4229-9e83-c203b8d09c9a}</Project>
       <Name>Extensions</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Art\PreviousImage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Art\Previous.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

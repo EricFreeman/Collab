@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Collab")]
+[assembly: AssemblyTitle("PreviousCollab")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Extend Health, Inc.")]
-[assembly: AssemblyProduct("Collab")]
+[assembly: AssemblyProduct("PreviousCollab")]
 [assembly: AssemblyCopyright("Copyright © Extend Health, Inc. 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
