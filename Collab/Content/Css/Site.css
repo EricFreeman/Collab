@@ -1,6 +1,117 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+body {
+  background-color: #B1E773;
+  color: #1A1A1A;
+  font-family: Segoe UI;
+  font-weight: lighter;
+
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+}
+
+#header {
+  width: 640px;
+  height:64px;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  position: relative;
+}
+
+#header span {
+  font-size: 32px;
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+}
+
+#header ul {
+  position: absolute;
+  bottom: 5px;
+  right: 0;
+}
+
+#header li {
+  float: left;
+  margin-left: 32px;
+  display: inline;
+}
+
+#header a {
+  color: #1A1A1A;
+  vertical-align: bottom;
+}
+
+#content {
+  text-align: center;
+}
+
 #artContainer {
+  background-color: #C8FF88;
+
   width: 640px;
   height: 640px;
+  margin-left: auto;
+  margin-right: auto;
+
+  -moz-box-shadow: 0 0 25px #91C753;
+  -webkit-box-shadow: 0 0 25px #91C753;
+  box-shadow: 0 0 25px #91C753;
+}
+
+#artUpload {
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-block;
 }
 
 .tile {
@@ -18,7 +129,11 @@
 }
 
 .unassigned {
-  
+  background-color: #9CDE50;
+
+  -moz-box-shadow: 0 0 10px #91C753;
+  -webkit-box-shadow: 0 0 10px #91C753;
+  box-shadow: 0 0 10px #91C753;
 }
 
 .hidden {
@@ -27,6 +142,8 @@
 
 #previousCollabs {
   width: 640px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .previousCollabBrowse {
@@ -35,4 +152,57 @@
 
 .selectedCollab {
   color: Green;
+}
+
+form input[type="file"] {
+  font-family: Segoe UI;
+  font-weight: lighter;
+}
+
+.button {
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color:#ededed;
+	-webkit-border-top-left-radius:0px;
+	-moz-border-radius-topleft:0px;
+	border-top-left-radius:0px;
+	-webkit-border-top-right-radius:0px;
+	-moz-border-radius-topright:0px;
+	border-top-right-radius:0px;
+	-webkit-border-bottom-right-radius:0px;
+	-moz-border-radius-bottomright:0px;
+	border-bottom-right-radius:0px;
+	-webkit-border-bottom-left-radius:0px;
+	-moz-border-radius-bottomleft:0px;
+	border-bottom-left-radius:0px;
+	text-indent:0;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	color:#777777;
+	font-family:Segoe UI;
+	font-size:15px;
+	font-weight:lighter;
+	font-style:normal;
+	height:40px;
+	line-height:40px;
+	width:100px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #ffffff;
+}
+.button:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+	background-color:#dfdfdf;
+  cursor: pointer;
+}
+.button:active
+{
+  position: relative;
+  top: 1px;
 }

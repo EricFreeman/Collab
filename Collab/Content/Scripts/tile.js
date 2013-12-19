@@ -9,12 +9,15 @@
       var initializeUploader = function(response, options) {
         $('#artUpload').html(response);
         $('form').ajaxForm(options);
+        $('#cancel').on('click', function () {
+          $('#uploader').fadeOut(250);
+        });
       };
 
       $('.tile').on('click', function () {
         var tile = $(this);
         if (!$(tile).find('img').hasClass('unassigned')) {
-          $('#artUpload').html('');
+          $('#uploader').fadeOut(250);
           return;
         }
 
@@ -28,7 +31,7 @@
               imgUrl = successMessage.data('imageurl');
 
               if (!!imgUrl) {
-                tile.find('img').attr('src', imgUrl).removeClass('unassigned');
+                tile.find('img').attr('src', imgUrl).removeClass('unassigned').unbind();
                 successMessage.fadeOut(4000);
               }
             }
@@ -43,11 +46,11 @@
             move = value / 2 * -1 + 'px',
             event = 'mouse' + key;
 
-        $('.tile').on(event, function () {
-          $(this).find('img').animate({
+        $('.unassigned').on(event, function () {
+          $(this).animate({
             'width': size,
             'height': size,
-            'left': move,
+            'left': value < 0 ? 0 : move,
             'top': move
           }, speed, function() {
             $(this).css({

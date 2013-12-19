@@ -2,10 +2,13 @@
 @using Extensions
 @model PreviousImageModel
 
+@{
+  Layout = null;
+}
+
 <div id="selected">
   @if (Model.Id.IsNotNullOrEmpty())
   {
-
     <div id="artContainer">
       @for (int Y = 0; Y < Model.Width; Y++)
       {

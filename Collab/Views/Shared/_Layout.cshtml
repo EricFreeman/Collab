@@ -6,7 +6,13 @@
   <link href="@Url.Content("~/Content/Css/Site.css")" rel="stylesheet" type="text/css" />
 </head>
   <body>
-    <div id="header"></div>
+    <div id="header">
+      <span>Collab</span>
+      <ul>
+        <li><a href="~/Art/Index">Current</a></li>
+        <li><a href="~/Art/Previous">Previous</a></li>
+      </ul>
+    </div>
     <div id="content">
       @RenderBody()
     </div>
