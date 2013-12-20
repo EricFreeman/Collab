@@ -48,7 +48,7 @@ table {
 }
 
 body {
-  background-color: #B1E773;
+  background-color: #C0FFEE;
   color: #1A1A1A;
   font-family: Segoe UI;
   font-weight: lighter;
@@ -65,6 +65,8 @@ body {
   margin-right: auto;
 
   position: relative;
+
+  color: #5EB79F;
 }
 
 #header span {
@@ -87,8 +89,14 @@ body {
 }
 
 #header a {
-  color: #1A1A1A;
   vertical-align: bottom;
+  color: #5EB79F;
+  text-decoration: none;
+}
+
+#header a:hover {
+  color: #3E977F;
+  text-decoration: underline;
 }
 
 #content {
@@ -96,16 +104,16 @@ body {
 }
 
 #artContainer {
-  background-color: #C8FF88;
+  background-color: #D3FFF3;
 
   width: 640px;
   height: 640px;
   margin-left: auto;
   margin-right: auto;
 
-  -moz-box-shadow: 0 0 25px #91C753;
-  -webkit-box-shadow: 0 0 25px #91C753;
-  box-shadow: 0 0 25px #91C753;
+  -moz-box-shadow: 0 0 25px #7ED7BF;
+  -webkit-box-shadow: 0 0 25px #7ED7BF;
+  box-shadow: 0 0 25px #7ED7BF;
 }
 
 #artUpload {
@@ -129,11 +137,11 @@ body {
 }
 
 .unassigned {
-  background-color: #9CDE50;
+  background-color: #D3FFF3;
 
-  -moz-box-shadow: 0 0 10px #91C753;
-  -webkit-box-shadow: 0 0 10px #91C753;
-  box-shadow: 0 0 10px #91C753;
+  -moz-box-shadow: 0 0 10px #7ED7BF;
+  -webkit-box-shadow: 0 0 10px #7ED7BF;
+  box-shadow: 0 0 10px #7ED7BF;
 }
 
 form p {
