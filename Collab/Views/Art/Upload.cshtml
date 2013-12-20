@@ -14,22 +14,31 @@
       </p>
       
       <p>
-        <input type="file" name="File" id="File" />
+        <label class="button add-photo-button">
+          <span>
+            Browse
+          </span>
+          <span>
+            <input type="file" id="File" name="File" />
+          </span>
+        </label>
+        <input type="text" id="path" />
       </p>
       
-      <p>
+      <p class="formSubmit">
         <input type="submit" id="submit" class="button" />
         <input type="button" value="Cancel" id="cancel" class="button" />
       </p>
     </form>
   }
   
-  @if (Model.IsSuccessful.IsTrue())
-  {
-    <h2 data-imageUrl="@Model.ImageUrl" id="successMessage">Success!</h2>
-  }
-  else if(Model.IsSuccessful.IsFalse())
-  {
-    <h3>@Model.ErrorMessage</h3>
-  }
+    @if (Model.IsSuccessful.IsTrue())
+    {
+      <span data-imageUrl="@Model.ImageUrl" id="successMessage">Success!</span>
+    }
+    else if(Model.IsSuccessful.IsFalse())
+    {
+      <span>@Model.ErrorMessage</span>
+    }
+
 </div>

@@ -12,6 +12,11 @@
         $('#cancel').on('click', function () {
           $('#uploader').fadeOut(250);
         });
+        $('#File').change(function () {
+          var path = $(this).val();
+          var editPath = path.substring(path.indexOf("fakepath\\") + 9);
+          $('#path').val(editPath); 
+        });
       };
 
       $('.tile').on('click', function () {
@@ -24,7 +29,7 @@
         $.get('/Art/Upload', { x: tile.data('x'), y: tile.data('y') }, function (response) {
           var options = {
             success: function(result) {
-              var imgUrl, successMessage;
+              var imgUrl, successMessage; 
               initializeUploader(result, options);
 
               successMessage = $('#successMessage');

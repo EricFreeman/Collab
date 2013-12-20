@@ -136,6 +136,11 @@ body {
   box-shadow: 0 0 10px #91C753;
 }
 
+form p {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
 .hidden {
   display: none;
 }
@@ -154,31 +159,26 @@ body {
   color: Green;
 }
 
-form input[type="file"] {
-  font-family: Segoe UI;
-  font-weight: lighter;
-}
-
 .button {
-	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
-	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-moz-box-shadow:inset 0 1px 0 0 #ffffff;
+	-webkit-box-shadow:inset 0 1px 0 0 #ffffff;
+	box-shadow:inset 0 1px 0 0 #ffffff;
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
 	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
 	background-color:#ededed;
-	-webkit-border-top-left-radius:0px;
-	-moz-border-radius-topleft:0px;
-	border-top-left-radius:0px;
-	-webkit-border-top-right-radius:0px;
-	-moz-border-radius-topright:0px;
-	border-top-right-radius:0px;
-	-webkit-border-bottom-right-radius:0px;
-	-moz-border-radius-bottomright:0px;
-	border-bottom-right-radius:0px;
-	-webkit-border-bottom-left-radius:0px;
-	-moz-border-radius-bottomleft:0px;
-	border-bottom-left-radius:0px;
+	-webkit-border-top-left-radius:0;
+	-moz-border-radius-topleft:0;
+	border-top-left-radius:0;
+	-webkit-border-top-right-radius:0;
+	-moz-border-radius-topright:0;
+	border-top-right-radius:0;
+	-webkit-border-bottom-right-radius:0;
+	-moz-border-radius-bottomright:0;
+	border-bottom-right-radius:0;
+	-webkit-border-bottom-left-radius:0;
+	-moz-border-radius-bottomleft:0;
+	border-bottom-left-radius:0;
 	text-indent:0;
 	border:1px solid #dcdcdc;
 	display:inline-block;
@@ -187,12 +187,12 @@ form input[type="file"] {
 	font-size:15px;
 	font-weight:lighter;
 	font-style:normal;
-	height:40px;
-	line-height:40px;
+	height:32px;
+	line-height:32px;
 	width:100px;
 	text-decoration:none;
 	text-align:center;
-	text-shadow:1px 1px 0px #ffffff;
+	text-shadow:1px 1px 0 #ffffff;
 }
 .button:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
@@ -206,3 +206,29 @@ form input[type="file"] {
   position: relative;
   top: 1px;
 }
+
+form input[type="file"]{
+  z-index: 999;
+  line-height: 0;
+  position: absolute;
+  opacity: 0;
+  filter: alpha(opacity = 0);-ms-filter: "alpha(opacity=0)";
+  cursor: pointer;
+  _cursor: hand;
+  margin: 0;
+  padding:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  }
+
+.add-photo-button {
+   position:relative;
+}
+
+ input[type="text"]{
+   font-size: 15px;
+   line-height: 25px;
+   font-family: Segoe UI;
+   font-weight: lighter;
+ }
