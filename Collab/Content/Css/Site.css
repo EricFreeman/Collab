@@ -94,7 +94,7 @@ body {
   text-decoration: none;
 }
 
-#header a:hover {
+#header li a:hover {
   color: #3E977F;
   text-decoration: underline;
 }

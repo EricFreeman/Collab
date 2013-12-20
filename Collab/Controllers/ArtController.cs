@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using Collab.Models;
 using Collab.Services;
 using Extensions;
@@ -106,14 +107,13 @@ namespace Collab.Controllers
             var model = new PreviousModel();
             model.Collabs = new List<PreviousCollab>();
 
-            var directories = new DirectoryInfo(Server.MapPath("~/UploadedImages/Previous")).GetDirectories();
+            var directories = new DirectoryInfo(Server.MapPath("~/UploadedImages/Previous")).GetDirectories().Reverse();
 
             directories.Each(d =>
             {
                 var pc = new PreviousCollab {Id = d.Name, HasThumbnail = d.GetFiles("thumbnail.png").Any()};
 
                 model.Collabs.Add(pc);
-
             });
 
             return View(model);
@@ -124,14 +124,16 @@ namespace Collab.Controllers
         {
             int width = 10, height = 10; //TODO: read these in from config once that's set up
 
+            if (id.IsNullOrEmpty())
+                id = GetDirectory("Previous").GetDirectories().Last().Name;
+
             var model = new PreviousImageModel();
             model.Id = id;
             model.Width = width;
             model.Height = height;
 
-            if (id.IsNotNullOrEmpty())
-                model.ImageList = ArtBuilder(
-                    Server.MapPath("~/UploadedImages/Previous/{0}".ToFormat(id)), width, height);
+            model.ImageList = ArtBuilder(Server.MapPath("~/UploadedImages/Previous/{0}".ToFormat(id)),
+                width, height);
 
             return View(model);
         }
