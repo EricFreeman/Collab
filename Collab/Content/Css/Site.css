@@ -153,12 +153,19 @@ form p {
 
 #previousCollabs {
   width: 640px;
+  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .previousCollabBrowse {
   float: left;
+  width: 128px;
+  height: 128px;
+}
+
+.thumbnail {
+  width: inherit;
 }
 
 .selectedCollab {

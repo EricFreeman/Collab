@@ -7,7 +7,9 @@
 }
 
 <!-- Currently looking at previous -->
-@Html.Action("PreviousImage", new CollabModel() {Id = ""})
+<div id="selected">
+  @Html.Action("PreviousImage", new CollabModel() {Id = ""})
+</div>
 
 <!-- Browse Previous -->
 <div id="previousCollabs">
@@ -23,7 +25,7 @@
         <img class="thumbnail" src="@Url.Content("~/Content/Images/no-thumbnail.png")" />
       }
       <br />
-      <span>@collab.Id</span>
+      <span class="hidden">@collab.Id</span>
     </div>
   }
 </div>
