@@ -20,17 +20,19 @@ namespace Collab.Services
                 CompleteArt();
         }
 
-        // TODO: make a config file for each piece that specifies width x height to make this method not hardcoded 
         private static bool IsComplete()
         {
+            var config = ConfigService.Generate(RootPath + "Current/");
             var images = new DirectoryInfo(RootPath + "Current/").GetFiles().OnlyImages();
-            return images.Count() == 100;
+            return images.Count() == (config.Width * config.Height);
         }
 
         private static void CompleteArt()
         {
             var newDirectory = RootPath + "Previous\\{0}".ToFormat(DateTime.Now.ToString("yyyyMMddHHmmssfffffff"));
             Directory.CreateDirectory(newDirectory);
+            File.Copy(RootPath + "Current/.config", newDirectory + "/.config");
+            ConfigService.GenerateNewCurrent();
 
             var oldFiles = new DirectoryInfo(RootPath + "Current\\").GetFiles().OnlyImages();
             oldFiles.Each(file => file.MoveTo(Path.Combine(newDirectory, file.Name)));
