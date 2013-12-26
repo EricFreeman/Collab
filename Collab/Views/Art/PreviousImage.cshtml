@@ -4,15 +4,17 @@
 
 @{
   Layout = null;
+  int width = Model.ImageList.GetLength(0);
+  int height = Model.ImageList.GetLength(1);
 }
 
 <div id="selected">
   @if (Model.Id.IsNotNullOrEmpty())
   {
-    <div id="artContainer">
-      @for (int Y = 0; Y < Model.Width; Y++)
+    <div id="artContainer" style="width: @(width * 64)px; height: @(height * 64)px;">
+      @for (int Y = 0; Y < height; Y++)
       {
-        for (int X = 0; X < Model.Height; X++)
+        for (int X = 0; X < width; X++)
         {
           Tile tile = Model.ImageList[X, Y];
 

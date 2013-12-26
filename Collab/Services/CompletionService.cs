@@ -8,7 +8,7 @@ namespace Collab.Services
 {
     public static class CompletionService
     {
-        static readonly string RootPath = HttpContext.Current.Server.MapPath("~/UploadedImages/");
+        private static readonly string RootPath = "~/UploadedImages/".ToMapPath();
 
         /// <summary>
         /// Verifies if the artwork is complete, and then saves it 

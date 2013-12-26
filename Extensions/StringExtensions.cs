@@ -1,4 +1,6 @@
-﻿namespace Extensions
+﻿using System.Web;
+
+namespace Extensions
 {
     public static class StringExtensions
     {
@@ -23,6 +25,11 @@
             var rtn = s.Substring(index, s.Length - index);
 
             return rtn;
+        }
+
+        public static string ToMapPath(this string s)
+        {
+            return HttpContext.Current.Server.MapPath(s);
         }
     }
 }

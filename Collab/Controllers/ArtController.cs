@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
-using System.Web.WebPages;
 using Collab.Models;
 using Collab.Services;
 using Extensions;
@@ -21,11 +19,7 @@ namespace Collab.Controllers
         /// </summary>
         public ActionResult Index()
         {
-            int width = 10 ,height = 10; //TODO: Hardcoded widths and heights are terrible please setup with config or something and make it so different art pieces can be different sizes
-
-            var model = new IndexModel { ImageList = new Tile[width, height], Width = width, Height = height };
-
-            model.ImageList = ArtBuilder(Server.MapPath("~/UploadedImages/Current/"), width, height);
+            var model = new IndexModel { ImageList = ArtBuilder("~/UploadedImages/Current/") };
 
             return View(model);
         }
@@ -43,8 +37,6 @@ namespace Collab.Controllers
         [HttpGet]
         public PartialViewResult Upload(int x, int y)
         {
-            //TODO: Make sure spot hasn't been taken
-
             var model = new UploadModel {X = x, Y = y};
 
             return PartialView(model);
@@ -88,7 +80,7 @@ namespace Collab.Controllers
                 if (model.IsSuccessful.IsNotFalse())
                 {
                     model.IsSuccessful = true;
-                    image.Save(Server.MapPath("~/UploadedImages/Current/") + model.X + "-" + model.Y + ".png");
+                    image.Save("~/UploadedImages/Current/".ToMapPath() + model.X + "-" + model.Y + ".png");
                     CompletionService.Run();
  
                     model.ImageUrl = GetImage(model.X, model.Y, true).FullName.RemoveBefore("\\UploadedImages\\");
@@ -107,7 +99,7 @@ namespace Collab.Controllers
             var model = new PreviousModel();
             model.Collabs = new List<PreviousCollab>();
 
-            var directories = new DirectoryInfo(Server.MapPath("~/UploadedImages/Previous")).GetDirectories().Reverse();
+            var directories = new DirectoryInfo("~/UploadedImages/Previous".ToMapPath()).GetDirectories().Reverse();
 
             directories.Each(d =>
             {
@@ -122,18 +114,14 @@ namespace Collab.Controllers
         [HttpGet]
         public ActionResult PreviousImage(string id = "")
         {
-            int width = 10, height = 10; //TODO: read these in from config once that's set up
-
             if (id.IsNullOrEmpty())
                 id = GetDirectory("Previous").GetDirectories().Last().Name;
 
-            var model = new PreviousImageModel();
-            model.Id = id;
-            model.Width = width;
-            model.Height = height;
-
-            model.ImageList = ArtBuilder(Server.MapPath("~/UploadedImages/Previous/{0}".ToFormat(id)),
-                width, height);
+            var model = new PreviousImageModel
+            {
+                Id = id,
+                ImageList = ArtBuilder("~/UploadedImages/Previous/{0}".ToFormat(id))
+            };
 
             return View(model);
         }
@@ -144,7 +132,7 @@ namespace Collab.Controllers
 
         public DirectoryInfo GetDirectory(string folder)
         {
-            return new DirectoryInfo(Server.MapPath("~/UploadedImages/{0}/".ToFormat(folder)));
+            return new DirectoryInfo("~/UploadedImages/{0}/".ToMapPath().ToFormat(folder));
         }
 
         private FileInfo GetImage(int x, int y)
@@ -176,14 +164,16 @@ namespace Collab.Controllers
                    .FirstOrDefault(file => new Tile(file).Matches(x, y));
         }
 
-        public Tile[,] ArtBuilder(string folderPath, int width, int height)
+        public Tile[,] ArtBuilder(string path)
         {
+            var folderPath = path.ToMapPath();
             var images = new DirectoryInfo(folderPath).GetFiles().OnlyImages();
+            var config = ConfigService.Generate(folderPath);
 
             return images
                 .Where(FilterImages)
                 .Select(x => new Tile(x))
-                .Aggregate(new Tile[width, height], (acc, tile) =>
+                .Aggregate(new Tile[config.Width, config.Height], (acc, tile) =>
                 {
                     acc[tile.Position.X, tile.Position.Y] = tile;
 
