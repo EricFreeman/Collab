@@ -117,13 +117,13 @@ namespace Collab.Controllers
             if (id.IsNullOrEmpty())
                 id = GetDirectory("Previous").GetDirectories().Last().Name;
 
-            var model = new PreviousImageModel
+            var model = new CollabModel
             {
                 Id = id,
                 ImageList = ArtBuilder("~/UploadedImages/Previous/{0}".ToFormat(id))
             };
 
-            return View(model);
+            return View("Collab", model);
         }
 
         #endregion

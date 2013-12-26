@@ -18,7 +18,7 @@ namespace Collab.Services
         {
             var rand = new Random();
             var config = new ConfigModel {Width = rand.Next(4, 16), Height = rand.Next(4, 16)};
-            string json = JsonConvert.SerializeObject(config);
+            var json = JsonConvert.SerializeObject(config);
             File.WriteAllText("~/UploadedImages/Current/.config".ToMapPath(), json);
         }
     }

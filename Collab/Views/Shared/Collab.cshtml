@@ -1,0 +1,39 @@
+﻿@using Collab.Models
+@using Extensions
+@model CollabModel
+
+@{
+  Layout = null;
+  int width = Model.ImageList != null ? Model.ImageList.GetLength(0) : 0;
+  int height = Model.ImageList != null ? Model.ImageList.GetLength(1) : 0;
+}
+
+<div id="selected">
+    <div id="artContainer" style="width: @(width * 64)px; height: @(height * 64)px;">
+      @for (int Y = 0; Y < height; Y++)
+      {
+        for (int X = 0; X < width; X++)
+        {
+          Tile tile = Model.ImageList[X, Y];
+
+        <div class="tile" data-x="@X" data-y="@Y">
+          @if (tile != null)
+          {
+            if (Model.Id.IsNotNullOrEmpty())
+            {
+              <img src="@Url.Content("~/UploadedImages/Previous/{0}/{1}".ToFormat(Model.Id, tile.ImagePath))" />
+            }
+            else
+            {
+              <img src="@Url.Content("~/UploadedImages/Current/" + tile.ImagePath)" />
+            }
+          }
+          else
+          {
+            <img src="@Url.Content("~/Content/Images/unassigned.png")" class="unassigned" />
+            }
+        </div>
+        }
+      }
+    </div>
+</div>

@@ -110,7 +110,7 @@
     </Compile>
     <Compile Include="Models\ConfigModel.cs" />
     <Compile Include="Models\IndexModel.cs" />
-    <Compile Include="Models\PreviousImageModel.cs" />
+    <Compile Include="Models\CollabModel.cs" />
     <Compile Include="Models\PreviousModel.cs" />
     <Compile Include="Models\UploadModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -171,7 +171,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Art\PreviousImage.cshtml" />
+    <Content Include="Views\Shared\Collab.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Art\Previous.cshtml" />
