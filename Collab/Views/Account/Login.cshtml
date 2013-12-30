@@ -1,0 +1,23 @@
+﻿@using Extensions
+@model Collab.Models.Account.LoginModel
+
+@{
+  ViewBag.Title = "Login";
+}
+
+<div id="loginContainer">
+  @if (Model.IsSuccessful.IsFalse())
+  {
+    <span class="error">Incorrect username and/or password!</span>
+  }
+
+  @using(Html.BeginForm("Login", "Account", FormMethod.Post, new { enctype="multipart/form-data" }))
+  {
+    @Html.TextBoxFor(x => x.Username, new { placeholder="Username" })
+    <br />
+    @Html.PasswordFor(x => x.Password, new { placeholder="Password" })
+    <br />
+    <input type="submit" class="button" />
+  }
+  <a href="~/Account/Register">Don't have an account?</a>
+</div>

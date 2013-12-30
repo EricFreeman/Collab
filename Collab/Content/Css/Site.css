@@ -88,13 +88,13 @@ body {
   display: inline;
 }
 
-#header a {
+a {
   vertical-align: bottom;
   color: #5EB79F;
   text-decoration: none;
 }
 
-#header li a:hover {
+a:hover {
   color: #3E977F;
   text-decoration: underline;
 }
@@ -220,7 +220,7 @@ form p {
   top: 1px;
 }
 
-form input[type="file"]{
+form input[type="file"] {
   z-index: 999;
   line-height: 0;
   position: absolute;
@@ -239,9 +239,17 @@ form input[type="file"]{
    position:relative;
 }
 
- input[type="text"]{
+ input[type="text"], input[type="password"] {
    font-size: 15px;
    line-height: 25px;
    font-family: Segoe UI;
    font-weight: lighter;
+}
+
+ #loginContainer {
+   margin-top: 64px;
+ }
+
+ .error {
+   color: #C00000;
  }
