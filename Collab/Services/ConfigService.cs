@@ -10,7 +10,25 @@ namespace Collab.Services
     {
         public static ConfigModel Generate(string path)
         {
-            var json = File.ReadAllText(Path.Combine(path, ".config"));
+            var fullPath = Path.Combine(path, ".config");
+            string json = string.Empty;
+
+            try
+            {
+                json = File.ReadAllText(fullPath);
+            }
+            catch (FileNotFoundException)
+            {
+                var config = new ConfigModel {Width = 10, Height = 10};
+                json = JsonConvert.SerializeObject(config);
+
+                using (var s = new StreamWriter(fullPath))
+                {
+                    s.Write(json);
+                }
+            }
+
+
             return JsonConvert.DeserializeObject<ConfigModel>(json);
         }
 
