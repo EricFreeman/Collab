@@ -28,7 +28,6 @@ namespace Collab.Services
                 }
             }
 
-
             return JsonConvert.DeserializeObject<ConfigModel>(json);
         }
 
